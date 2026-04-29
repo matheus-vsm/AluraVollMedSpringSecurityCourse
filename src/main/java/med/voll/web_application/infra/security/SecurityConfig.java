@@ -2,6 +2,7 @@ package med.voll.web_application.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -46,6 +47,7 @@ public class SecurityConfig {
                         .alwaysRemember(true) // como se fosse o Lembrar de Mim. comentado no front
 //                        .tokenValiditySeconds(3600) // determina o quanto tempo dura o token remember me (1hora)
                 )
+                .csrf(Customizer.withDefaults())
                 .build();
     }
 
