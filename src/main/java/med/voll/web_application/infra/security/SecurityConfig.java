@@ -5,28 +5,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public UserDetailsService dadosUsuariosCadastrados() {
-        UserDetails user = User.builder()
-                .username("alice@email.com")
-                .password("{noop}alice123")
-                .build();
-        UserDetails user2 = User.builder()
-                .username("matheus@email.com")
-                .password("{noop}matheus123")
-                .build();
-        return new InMemoryUserDetailsManager(user, user2);
-    }
+//    // salvando usuarios na memoria
+//    @Bean
+//    public UserDetailsService dadosUsuariosCadastrados() {
+//        UserDetails user = User.builder()
+//                .username("alice@email.com")
+//                .password("{noop}alice123")
+//                .build();
+//        UserDetails user2 = User.builder()
+//                .username("matheus@email.com")
+//                .password("{noop}matheus123")
+//                .build();
+//        return new InMemoryUserDetailsManager(user, user2);
+//    }
 
     @Bean
     public SecurityFilterChain filtrosDeSeguranca(HttpSecurity http) throws Exception {
