@@ -1,0 +1,58 @@
+package med.voll.web_application.infra.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+//    // salvando usuarios na memoria
+//    @Bean
+//    public UserDetailsService dadosUsuariosCadastrados() {
+//        UserDetails user = User.builder()
+//                .username("alice@email.com")
+//                .password("{noop}alice123")
+//                .build();
+//        UserDetails user2 = User.builder()
+//                .username("matheus@email.com")
+//                .password("{noop}matheus123")
+//                .build();
+//        return new InMemoryUserDetailsManager(user, user2);
+//    }
+
+    @Bean
+    public SecurityFilterChain filtrosDeSeguranca(HttpSecurity http) throws Exception {
+        return http
+                .authorizeHttpRequests(req -> {
+                    req.requestMatchers("/css/**", "/js/**", "/assets/**").permitAll();
+                    req.anyRequest().authenticated();
+                })
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .rememberMe(rememberMe -> rememberMe
+                        .key("lembrarDeMim")
+                        .alwaysRemember(true) // como se fosse o Lembrar de Mim. comentado no front
+//                        .tokenValiditySeconds(3600) // determina o quanto tempo dura o token remember me (1hora)
+                )
+                .csrf(Customizer.withDefaults())
+                .build();
+    }
+
+    @Bean
+    public PasswordEncoder codificadorDeSenha() {
+        return new BCryptPasswordEncoder();
+    }
+
+}
