@@ -45,4 +45,7 @@ public class Usuario implements UserDetails {
         return nome;
     }
 
+    public Long getId() {
+        return id;
+    }
 }
