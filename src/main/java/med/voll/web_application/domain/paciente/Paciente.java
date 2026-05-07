@@ -7,18 +7,18 @@ import jakarta.persistence.*;
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY) // o ID agora é gerado a partir do ID do usuário
     private Long id;
     private String nome;
     private String email;
     private String telefone;
     private String cpf;
 
-    @Deprecated
     public Paciente() {
     }
 
-    public Paciente(DadosCadastroPaciente dados) {
+    public Paciente(Long id, DadosCadastroPaciente dados) {
+        this.id = id;
         modificarDados(dados);
     }
 
